@@ -1,0 +1,15 @@
+.movie-list {
+  list-style: none;
+  display: flex;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.movie-list__item {
+  width: calc(50% - 10px); /* Ширина элемента - половина ширины контейнера минус отступы */
+  margin-bottom: 36px;
+}
