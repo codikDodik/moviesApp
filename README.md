@@ -1,2 +1,2 @@
 # Ссылка на опубликованную версию
-https://movies-37k8lihqv-codikdodik.vercel.app/?vercelToolbarCode=etMfLtcGQ1fCww4
+https://movies-dn7eai4xq-codikdodik.vercel.app/?vercelToolbarCode=2Og-0cJAAEGJ7xx
