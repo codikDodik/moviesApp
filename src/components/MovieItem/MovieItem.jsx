@@ -6,7 +6,26 @@ import MovieService from '../../services/APIService'
 
 import './MovieItem.css'
 
+const MAX_DESCRIPTION_LENGTH = 165
+const DEFAULT_DESCRIPTION = 'Here is no overview for this movie'
+
+function formatDescription(text, limit) {
+  if (text.length <= limit) {
+    return text
+  } else {
+    text = text.slice(0, limit)
+    const lastSpace = text.lastIndexOf(' ')
+    if (lastSpace > 0) {
+      text = text.substr(0, lastSpace)
+    }
+    return text + '...'
+  }
+}
+
 class MovieItem extends Component {
+  constructor(props) {
+    super(props)
+  }
   state = {
     title: null,
     date: null,
@@ -15,20 +34,20 @@ class MovieItem extends Component {
   }
 
   componentDidMount() {
-    this.getFilm()
+    this.getFilm(this.props.result)
   }
 
   movieService = new MovieService()
 
-  getFilm() {
+  getFilm(index) {
     this.movieService.getAllMovies('fight club', 1).then((body) => {
-      const releaseDateMovies = body.results[0].release_date
+      const releaseDateMovies = body.results[index].release_date
       const formattedDate = releaseDateMovies ? format(parseISO(releaseDateMovies), 'MMMM d, y') : 'Unknown date'
       this.setState({
-        title: body.results[0].original_title,
+        title: body.results[index].original_title,
         date: formattedDate,
-        genres: body.results[0].genre_ids,
-        overview: body.results[0].overview,
+        genres: body.results[index].genre_ids,
+        overview: body.results[index].overview,
       })
       console.log(body)
     })
@@ -36,6 +55,7 @@ class MovieItem extends Component {
 
   render() {
     const { title, date, genres, overview } = this.state
+    const text = overview ? formatDescription(overview, MAX_DESCRIPTION_LENGTH) : DEFAULT_DESCRIPTION
     return (
       <div className="movie-card">
         <div className="movie-card__details">
@@ -51,7 +71,7 @@ class MovieItem extends Component {
                   </span>
                 ))}
             </p>
-            <p className="movie-card__description">{overview}</p>
+            <p className="movie-card__description">{text}</p>
           </div>
         </div>
       </div>
