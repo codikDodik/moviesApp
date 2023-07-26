@@ -76,12 +76,10 @@ class MovieItem extends Component {
     const { loading, error, movieDetails } = this.state
     const errorMessage = error && !loading ? <Alert type="error" message={DEFAULT_ERROR_MESSAGE} /> : null
     const spinner = loading ? <Spin className="spinner" /> : <CardView movieDetails={movieDetails} />
-    const content = !(loading || error) ? <CardView movieDetails={movieDetails} /> : null
     return (
       <div>
         {spinner}
         {errorMessage}
-        {content}
       </div>
     )
   }
