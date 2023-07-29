@@ -1,56 +1,184 @@
-body {
-  max-width: 1010px;
+.movie {
+  width: 454px;
+  height: 281px;
+  display: grid;
+  grid-template-columns: 183px 271px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'poster info'
+    'poster description'
+    'poster rate';
+
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-.spinner{
-  align-items: center;
-}
-
-.movie-card {
-  min-width: 451px;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-}
-
-.movie-card__details {
-  display: flex;
-}
-
-.movie-card__poster {
+.movie__poster {
+  grid-area: poster;
   width: 183px;
   height: 281px;
 }
 
-.movie-card__info {
-  min-width: 268px;
-  margin-left: 20px;
+.movie__info {
+  grid-area: info;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 15px 0 15px;
 }
 
-.movie-card__title {
-  font-weight: 400;
+.movie__header {
+  grid-area: header;
+  display: flex;
+}
+
+.movie__name {
   font-size: 20px;
-  margin-bottom: 17px;
+  margin-right: auto;
+  line-height: 28px;
 }
 
-.movie-card__date {
-  margin: 0;
-  color: #827e7e;
-  font-weight: 400;
+.movie__avg-rate {
   font-size: 12px;
+  text-align: center;
+  min-width: 30px;
+  height: 30px;
+  /* line-height: 30px; */
+  border: 2px solid;
+  border-radius: 50%;
+  padding-bottom: 5px;
+  padding-top: 6px;
 }
 
-.movie-card__genre {
-  padding: 0;
+.rate-terrible {
+  border-color: #e90000;
 }
 
-.genre__item {
+.rate-bad {
+  border-color: #e97e00;
+}
+
+.rate-normal {
+  border-color: #e9d100;
+}
+
+.rate-good {
+  border-color: #66e900;
+}
+
+.movie__release {
+  grid-area: release;
+  color: #827e7e;
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.movie__genre {
+  grid-area: genre;
+  color: #827e7e;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.movie__genre a {
+  max-width: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
   border: 1px solid #d9d9d9;
-  border-radius: 3px;
-  display: inline;
-  margin-right: 8px;
-  padding: 3px;
-  background-color: white;
+  border-radius: 2px;
+  background-color: #fafafa;
 }
 
-.movie-card__description {
-  max-width: 228px;
+.movie__description {
+  grid-area: description;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0 15px;
+}
+
+.movie__rate {
+  grid-area: rate;
+  font-size: 15px;
+  align-self: end;
+  justify-self: center;
+  padding: 12px 15px 15px 12px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .movie {
+    padding: 6px 10px 12px 6px;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 110px 100px 30px;
+    grid-template-areas:
+      'poster info'
+      'description description'
+      'rate rate';
+
+    min-width: 315px;
+    max-width: 380px;
+    height: 250px;
+    margin: 0 auto;
+  }
+
+  .movie__poster {
+    width: 60px;
+    height: 91px;
+  }
+
+  .movie__info {
+    gap: 5px;
+    padding: 4px 16px;
+  }
+
+  .movie__description {
+    align-self: center;
+  }
+
+  .movie__rate {
+    padding: 5px;
+    justify-self: end;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1119px) {
+  .movie {
+    padding: 6px 10px 12px 6px;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 110px 100px 30px;
+    grid-template-areas:
+      'poster info'
+      'description description'
+      'rate rate';
+
+    min-width: 330px;
+    max-width: 420px;
+    height: 250px;
+    margin: 0 auto;
+  }
+
+  .movie__poster {
+    width: 60px;
+    height: 91px;
+  }
+
+  .movie__info {
+    gap: 5px;
+    padding: 4px 16px;
+  }
+
+  .movie__description {
+    align-self: center;
+  }
+
+  .movie__rate {
+    padding: 5px;
+    justify-self: end;
+  }
 }

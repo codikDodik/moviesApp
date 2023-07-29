@@ -1,36 +1,38 @@
-import { Component } from 'react'
-// import { Spin } from 'antd'
+import React from 'react'
+import { Spin, Alert } from 'antd'
+
+import MovieItem from '../MovieItem/MovieItem.jsx'
 
 import './MovieList.css'
-import MovieItem from '../MovieItem'
 
-export default class MovieList extends Component {
-  // state = {
-  //   loading: true,
-  // }
+const MovieList = (props) => {
+  const { movies, loading, error, errorInfo } = props
 
-  // handleLoading() {
-  //   this.setState({ loading: false })
-  // }
+  const elements = movies.map((el) => {
+    const { movieId } = el
+    return <MovieItem data={el} key={movieId} />
+  })
 
-  render() {
-    // const { loading } = this.state
+  const hasData = !(loading || error)
+  const errorMessage =
+    error && !loading ? <Alert type="error" description={errorInfo} className="movies__error" /> : null
+  const loader = loading && !error ? <Spin size="large" className="movies__loader" /> : null
+  const content = hasData ? elements : null
 
-    // if (loading) {
-    //   return <Spin />
-    // }
-    const movieItems = Array(6)
-      .fill()
-      .map((_, index = 0) => (
-        <li className="movie-list__item" key={index}>
-          <MovieItem result={index + 1} stopLoading={this.handleLoading} />
-        </li>
-      ))
-
-    return (
-      <div>
-        <ul className="movie-list">{movieItems}</ul>
-      </div>
-    )
-  }
+  return (
+    <ul className="movies__list">
+      {errorMessage}
+      {loader}
+      {content}
+    </ul>
+  )
 }
+
+MovieItem.defaultProps = {
+  movies: [],
+  loading: false,
+  error: false,
+  errorInfo: '',
+}
+
+export default MovieList

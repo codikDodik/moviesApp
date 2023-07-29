@@ -1,15 +1,24 @@
-.movie-list {
-  list-style: none;
-  display: flex;
-}
-
-.movie-list {
+.movies__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 36px;
+  height: 100%;
+  margin-bottom: 25px;
+  align-items: center;
 }
 
-.movie-list__item {
-  width: calc(50% - 10px); /* Ширина элемента - половина ширины контейнера минус отступы */
-  margin-bottom: 36px;
+.movies__loader {
+  margin: 50% auto;
+}
+
+.movies__error {
+  margin: 0 auto;
+  height: 60px;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .movies__list {
+    row-gap: 30px;
+    margin: 0 auto;
+  }
 }

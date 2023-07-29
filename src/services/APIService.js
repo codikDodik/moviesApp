@@ -1,21 +1,87 @@
 export default class MovieService {
-  _BaseURL = 'https://api.themoviedb.org/3/'
-  _ApiKey = 'e6e7e6f5dbcc6335735f9e09f203c36a'
-
-  async getResource(url) {
-    const res = await fetch(`${this._BaseURL}search/movie?api_key=${this._ApiKey}${url}`)
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` + `, receive ${res.status}`)
-    }
-
-    const body = await res.json()
-    return body
+  constructor() {
+    this._baseURL = 'https://api.themoviedb.org'
+    this._apiKey = 'e6e7e6f5dbcc6335735f9e09f203c36a'
+    this.addRating = this.addRating.bind(this)
   }
 
-  async getAllMovies(title, page) {
-    const url = `&query=${title}&include_adult=false&language=en-US&page=${page}`
-    const movies = this.getResource(url)
-    return movies
+  async getResourse(url, options = null) {
+    const response = await fetch(`${this._baseURL}${url}`, options)
+
+    if (!response.ok) {
+      throw new Error(`Couldn't fetch ${url}, recieved ${response.status}`)
+    }
+
+    return await response.json()
+  }
+
+  async getAllMovies(keyWord, page = '1') {
+    if (!keyWord) {
+      keyWord = 'fight club'
+    }
+    const params = `/3/search/movie?api_key=${this._apiKey}&query=${keyWord}&%3F&language=en-US&include_adult=false&page=${page}`
+    const response = await this.getResourse(params)
+    return this._transformMovieData(response)
+  }
+
+  async createGuestSession() {
+    const params = `/3/authentication/guest_session/new?api_key=${this._apiKey}`
+    const response = await this.getResourse(params)
+
+    return response
+  }
+
+  async addRating(value, guestId, movieId) {
+    const options = {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ value: value }),
+    }
+    const params = `/3/movie/${movieId}/rating?api_key=${this._apiKey}&guest_session_id=${guestId}`
+    const response = await this.getResourse(params, options)
+
+    return response
+  }
+
+  async getRatedMovies(guestId, page = 1) {
+    const params = `/3/guest_session/${guestId}/rated/movies?api_key=${this._apiKey}&&page=${page}`
+    const response = await this.getResourse(params)
+    return this._transformMovieData(response)
+  }
+
+  async getGenres() {
+    const params = `/3/genre/movie/list?api_key=${this._apiKey}`
+    const response = await this.getResourse(params)
+
+    return response.genres
+  }
+
+  _transformMovieData(movies) {
+    const totalPages = movies.total_pages
+    const totalResults = movies.total_results
+    const page = movies.page
+    const moviesData = {}
+    const results = movies.results.map((movie) => {
+      return {
+        title: movie.title,
+        description: movie.overview,
+        posterPath: movie.poster_path,
+        release: movie.release_date,
+        avgRate: movie.vote_average,
+        movieId: movie.id,
+        genreIds: movie.genre_ids,
+        rating: movie.rating ? movie.rating : null,
+      }
+    })
+    moviesData.totalPages = totalPages
+    moviesData.totalResults = totalResults
+    moviesData.results = results
+    moviesData.page = page
+
+    return moviesData
   }
 }
 
