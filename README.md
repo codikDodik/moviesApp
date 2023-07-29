@@ -1,2 +1,1 @@
-# Ссылка на опубликованную версию
-https://movies-app-git-master-codikdodik.vercel.app/
+Сылка [https://movies-nut4pdt8n-codikdodik.vercel.app]
