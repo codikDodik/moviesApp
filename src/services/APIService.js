@@ -17,7 +17,7 @@ export default class MovieService {
 
   async getAllMovies(keyWord, page = '1') {
     if (!keyWord) {
-      keyWord = 'fight club'
+      keyWord = ''
     }
     const params = `/3/search/movie?api_key=${this._apiKey}&query=${keyWord}&%3F&language=en-US&include_adult=false&page=${page}`
     const response = await this.getResourse(params)
@@ -84,9 +84,3 @@ export default class MovieService {
     return moviesData
   }
 }
-
-// const movieService = new MovieService()
-
-// movieService.getAllMovies('trainspotting', 1).then((res) => {
-//   console.log(res)
-// })

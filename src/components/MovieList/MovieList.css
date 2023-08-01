@@ -16,6 +16,10 @@
   height: 60px;
 }
 
+.movies__info {
+  margin: 0 auto;
+}
+
 @media (min-width: 320px) and (max-width: 767px) {
   .movies__list {
     row-gap: 30px;

@@ -22,7 +22,7 @@ const TABS = [
   },
 ]
 
-export default class App extends React.Component {
+class App extends React.Component {
   movieServise = new MovieService()
   state = {
     movies: [],
@@ -211,7 +211,7 @@ export default class App extends React.Component {
           ) : null}
 
           <Provider value={{ addRating: this.movieServise.addRating, state: this.state }}>
-            <MovieList movies={movieList} error={error} errorInfo={errorInfo} loading={loading} />
+            <MovieList movies={movieList} error={error} errorInfo={errorInfo} loading={loading} value={searchValue} />
           </Provider>
 
           <Pagination
@@ -220,10 +220,12 @@ export default class App extends React.Component {
             pageSize={movieList.length}
             showSizeChanger={false}
             onChange={(page) => this.changePage(page)}
-            className={!movieList.length ? 'hidden' : ''}
+            className={!movieList.length ? 'hidden' : 'pagination'}
           />
         </section>
       </div>
     )
   }
 }
+
+export default App

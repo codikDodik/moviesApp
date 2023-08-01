@@ -1,6 +1,7 @@
 import React from 'react'
 import { format } from 'date-fns'
 import { Rate } from 'antd'
+import PropTypes from 'prop-types'
 
 import { Consumer } from '../../context/context'
 import './MovieItem.css'
@@ -50,7 +51,7 @@ function displayGenres(genresList, ids) {
   })
 }
 
-export default class MovieItem extends React.Component {
+class MovieItem extends React.Component {
   render() {
     const { title, description, posterPath, release, avgRate, movieId, genreIds, rating } = this.props.data
 
@@ -79,11 +80,11 @@ export default class MovieItem extends React.Component {
             <div className="movie__info">
               <div className="movie__header">
                 <h4 className="movie__name">{formatText(title, MAX_TITLE_LENGTH)}</h4>
-                <div className={rateClassNames}>{rate}</div>
+                <span className={rateClassNames}>{rate}</span>
               </div>
 
               <p className="movie__release">{releaseDate}</p>
-              <div className="movie__genre">{displayGenres(genres, genreIds)}</div>
+              <span className="movie__genre">{displayGenres(genres, genreIds)}</span>
             </div>
             <p className="movie__description">{text}</p>
             <Rate
@@ -99,3 +100,29 @@ export default class MovieItem extends React.Component {
     )
   }
 }
+
+MovieItem.defaultProps = {
+  title: '',
+  description: '',
+  posterPath: '',
+  release: '',
+  avgRate: 0,
+  movieId: 0,
+  genreIds: [],
+  rating: 0,
+  addRating: () => {},
+}
+
+MovieItem.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  posterPath: PropTypes.string,
+  release: PropTypes.string,
+  avgRate: PropTypes.number,
+  movieId: PropTypes.number,
+  genreIds: PropTypes.array,
+  rating: PropTypes.number,
+  addRating: PropTypes.func,
+}
+
+export default MovieItem

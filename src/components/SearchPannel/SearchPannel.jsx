@@ -1,5 +1,6 @@
 import React from 'react'
 import { debounce } from 'lodash'
+import PropTypes from 'prop-types'
 
 import './SearchPannel.css'
 
@@ -35,5 +36,17 @@ class SearchPannel extends React.Component {
       </form>
     )
   }
+}
+
+SearchPannel.defaultProps = {
+  getMovies: () => {},
+  value: '',
+  getInputValue: () => {},
+}
+
+SearchPannel.propTypes = {
+  getMovies: PropTypes.func,
+  value: PropTypes.string,
+  getInputValue: PropTypes.func,
 }
 export default SearchPannel
