@@ -1,2 +1,2 @@
-# Ссылка на опубликованную версию
-https://movies-app-git-master-codikdodik.vercel.app/
+**Сайт работает только с VPN**
+# [Click](https://movies-nut4pdt8n-codikdodik.vercel.app)
